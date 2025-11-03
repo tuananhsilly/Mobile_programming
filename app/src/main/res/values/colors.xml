@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="panelGray">#E6E6E6</color>   <!-- nền vùng hiển thị -->
+    <color name="keyBg">#DDDDDD</color>       <!-- nền phím thường -->
+    <color name="keyAccent">#CFCFCF</color>   <!-- nền phím "=" -->
+</resources>
+
+

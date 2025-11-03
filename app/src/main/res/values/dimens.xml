@@ -1,0 +1,4 @@
+<resources>
+    <dimen name="grid_padding">8dp</dimen>   <!-- padding viền ngoài bàn phím -->
+    <dimen name="key_gap">4dp</dimen>        <!-- khoảng cách giữa các phím -->
+</resources>
