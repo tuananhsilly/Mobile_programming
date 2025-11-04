@@ -8,6 +8,9 @@ import androidx.appcompat.app.AppCompatActivity
 import com.example.myapplication.R
 import java.text.SimpleDateFormat
 import java.util.*
+import androidx.core.view.isVisible
+import android.content.Context
+import android.view.inputmethod.InputMethodManager
 
 class RegisterActivity : AppCompatActivity() {
 
@@ -21,6 +24,8 @@ class RegisterActivity : AppCompatActivity() {
     private lateinit var cbAgree: CheckBox
     private lateinit var btnSelect: Button
     private lateinit var btnRegister: Button
+    private lateinit var scrollRoot: ScrollView
+
 
     private val sdf = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault())
 
@@ -38,12 +43,30 @@ class RegisterActivity : AppCompatActivity() {
         cbAgree = findViewById(R.id.cbAgree)
         btnSelect = findViewById(R.id.btnSelectDate)
         btnRegister = findViewById(R.id.btnRegister)
+        scrollRoot = findViewById(R.id.scrollRoot)
+
 
         // Toggle CalendarView
-        btnSelect.setOnClickListener {
-            calendar.visibility =
-                if (calendar.visibility == View.GONE) View.VISIBLE else View.GONE
-        }
+
+
+                btnSelect.setOnClickListener {
+                    // Ẩn bàn phím nếu đang mở
+                        currentFocus?.let { v ->
+                            val imm = getSystemService(INPUT_METHOD_SERVICE) as InputMethodManager
+                            imm.hideSoftInputFromWindow(v.windowToken, 0)
+                            v.clearFocus()
+                        }
+
+                    calendar.isVisible = !calendar.isVisible
+
+                    if (calendar.isVisible) {
+                        // Đợi layout xong rồi cuộn tới lịch
+                        calendar.post {
+                            scrollRoot.smoothScrollTo(0, calendar.top)
+                        }
+                    }
+                }
+
 
         // Khi chọn ngày -> cập nhật EditText và ẩn lịch
         calendar.setOnDateChangeListener { _, year, month, dayOfMonth ->
